@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para vos 💙</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #b3e5fc, #e1f5fe);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+}
+
+/* SOBRE */
+.envelope {
+  width: 200px;
+  height: 130px;
+  background: #90caf9;
+  position: relative;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-left: 100px solid transparent;
+  border-right: 100px solid transparent;
+  border-bottom: 70px solid #64b5f6;
+}
+
+.hidden {
+  display: none;
+}
+
+h1 {
+  color: #0d47a1;
+}
+
+/* BOTONES */
+.buttons {
+  margin-top: 20px;
+}
+
+button {
+  padding: 15px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#yes {
+  background: #42a5f5;
+  color: white;
+}
+
+#no {
+  background: #90a4ae;
+  color: white;
+  margin-left: 10px;
+}
+
+/* FINAL */
+.final {
+  animation: fadeIn 1.5s ease;
+}
+
+img {
+  width: 230px;
+  margin-top: 20px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* OCULTAR AUDIO */
+audio {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- SOBRE -->
+  <div id="envelope" class="envelope"></div>
+
+  <!-- PREGUNTA -->
+  <div id="question" class="hidden">
+    <h1>¿Querés ser mi San Valentín? 💙</h1>
+    <div class="buttons">
+      <button id="yes">Sí 💙</button>
+      <button id="no">No 😅</button>
+    </div>
+  </div>
+
+  <!-- FINAL -->
+  <div id="final" class="hidden final">
+    <h1>Te amo en cada uno de los universos 💫</h1>
+    <img src="https://media.tenor.com/1wK6Y8JkXGkAAAAC/snoopy-dance.gif">
+  </div>
+
+  <!-- 🎵 MUSICA -->
+  <audio id="music" preload="auto">
+    <source src="amor.mp3" type="audio/mpeg">
+  </audio>
+
+</div>
+
+<script>
+const envelope = document.getElementById("envelope");
+const question = document.getElementById("question");
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const final = document.getElementById("final");
+const music = document.getElementById("music");
+
+envelope.addEventListener("click", () => {
+  envelope.classList.add("hidden");
+  question.classList.remove("hidden");
+});
+
+let noScale = 1;
+let yesScale = 1;
+
+noBtn.addEventListener("click", () => {
+  noScale -= 0.15;
+  yesScale += 0.15;
+
+  if (noScale <= 0) {
+    noBtn.style.display = "none";
+    noBtn.disabled = true;
+  } else {
+    noBtn.style.transform = `scale(${noScale})`;
+  }
+
+  yesBtn.style.transform = `scale(${yesScale})`;
+});
+
+yesBtn.addEventListener("click", () => {
+  // vibración ❤️
+  if (navigator.vibrate) {
+    navigator.vibrate([200, 100, 200]);
+  }
+
+  question.classList.add("hidden");
+  final.classList.remove("hidden");
+
+  // ⏱️ ESTRIBILLO (ajustable)
+  music.currentTime = 45; // ← si querés más exacto, cambiá este número
+  music.play();
+});
+</script>
+
+</body>
+</html>
